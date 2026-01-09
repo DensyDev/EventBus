@@ -113,10 +113,17 @@ public interface EventBus {
      * Dispatches an event to all registered subscribers.
      *
      * @param event the event instance to call
-     * @param <E>   the type of the event
-     * @return the event instance after all handlers have processed it
+     * @return the event call result
      */
-    <E extends Event> E call(E event);
+    CallResult call(Event event);
+
+    /**
+     * Dispatches an event to all registered subscribers without throwing exceptions.
+     *
+     * @param event the event instance to call
+     * @return the event call result
+     */
+    CallResult callSilently(Event event);
 
     /**
      * Retrieves the executor service used for handling asynchronous events.

@@ -1,5 +1,6 @@
 package com.luminiadev.eventbus.core;
 
+import com.luminiadev.eventbus.api.CallResult;
 import com.luminiadev.eventbus.api.Event;
 import com.luminiadev.eventbus.api.EventBus;
 import com.luminiadev.eventbus.api.EventListener;
@@ -163,19 +164,33 @@ public class EventBusImpl implements EventBus {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public <E extends Event> E call(E event) {
-        Class<E> eventClass = (Class<E>) event.getClass();
+    public CallResult call(Event event) {
+        CallResult result = this.callSilently(event);
+        if (!result.isSuccess()) {
+            result.getExceptions().forEach((subscriber, exception) -> {
+                throw new EventException("Event handling for subscriber " + subscriber + " failed with exception", exception);
+            });
+        }
+        return result;
+    }
 
-        List<Subscriber<E>> subscribers = this.getSubscribers(eventClass);
-        if (!subscribers.isEmpty()) {
-            for (Subscriber<E> subscriber : subscribers) {
-                if (Utils.shouldCallSubscriber(subscriber, event)) {
-                    subscriber.execute(event);
+    @Override
+    public CallResult callSilently(Event event) {
+        Map<Subscriber<?>, Throwable> exceptions = new HashMap<>();
+
+        var subscribers = this.getSubscribers(event.getClass());
+        for (Subscriber<?> subscriber : subscribers) {
+            if (Utils.shouldCallSubscriber(subscriber, event)) {
+                try {
+                    //noinspection unchecked
+                    ((Subscriber<Event>) subscriber).execute(event);
+                } catch (Throwable throwable) {
+                    exceptions.put(subscriber, throwable);
                 }
             }
         }
-        return event;
+
+        return new CallResultImpl(event, exceptions);
     }
 
     @Override
