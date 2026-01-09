@@ -126,6 +126,18 @@ public interface EventBus {
     CallResult callSilently(Event event);
 
     /**
+     * Dispatches an event to all registered subscribers of the event's class,
+     * its superclasses, and implemented interfaces.
+     * <p>
+     * Subscriptions are executed in order of their priority across the entire
+     * inheritance hierarchy. Results are captured without throwing exceptions.
+     *
+     * @param event the event instance to call
+     * @return the event call result
+     */
+    CallResult callParents(Event event);
+
+    /**
      * Retrieves the executor service used for handling asynchronous events.
      *
      * @return the async executor service

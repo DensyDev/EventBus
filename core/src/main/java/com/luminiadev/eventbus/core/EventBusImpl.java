@@ -5,8 +5,8 @@ import com.luminiadev.eventbus.api.Event;
 import com.luminiadev.eventbus.api.EventBus;
 import com.luminiadev.eventbus.api.EventListener;
 import com.luminiadev.eventbus.api.exception.EventException;
-import com.luminiadev.eventbus.api.subscription.annotation.Subscribe;
 import com.luminiadev.eventbus.api.subscription.Subscriber;
+import com.luminiadev.eventbus.api.subscription.annotation.Subscribe;
 import com.luminiadev.eventbus.core.subscription.LambdaSubscriber;
 import com.luminiadev.eventbus.core.subscription.MethodSubscriber;
 import com.luminiadev.eventbus.core.util.Utils;
@@ -23,6 +23,7 @@ public class EventBusImpl implements EventBus {
 
     private final Map<Class<? extends Event>, List<Subscriber<?>>> subscribersByEvent = new ConcurrentHashMap<>();
     private final Map<Object, List<Subscriber<?>>> subscribersByListener = new ConcurrentHashMap<>();
+    private final Map<Class<? extends Event>, Set<Class<? extends Event>>> eventParentsCache = new ConcurrentHashMap<>();
     private final ExecutorService asyncExecutor;
 
     private static final Comparator<Subscriber<?>> PRIORITY_COMPARATOR = (s1, s2) -> Integer.compare(s2.getPriority(), s1.getPriority());
@@ -51,7 +52,7 @@ public class EventBusImpl implements EventBus {
         if (subscribers == null) {
             return Collections.emptyList();
         }
-        // noinspection unchecked
+        //noinspection unchecked
         return Collections.unmodifiableList((List<Subscriber<E>>) (List<?>) subscribers);
     }
 
@@ -176,13 +177,37 @@ public class EventBusImpl implements EventBus {
 
     @Override
     public CallResult callSilently(Event event) {
+        @SuppressWarnings("unchecked")
+        List<Subscriber<?>> subscribers = (List<Subscriber<?>>) (List<?>) this.getSubscribers(event.getClass());
+        return callInternal(event, subscribers);
+    }
+
+    @Override
+    public CallResult callParents(Event event) {
+        Set<Class<? extends Event>> classes = eventParentsCache.computeIfAbsent(event.getClass(), clazz -> {
+            @SuppressWarnings("unchecked")
+            Set<Class<? extends Event>> result = (Set<Class<? extends Event>>) (Set<?>) Utils.getClassHierarchy(clazz);
+            return result;
+        });
+
+        List<Subscriber<?>> allSubscribers = new ArrayList<>();
+        for (Class<? extends Event> clazz : classes) {
+            allSubscribers.addAll(this.getSubscribers(clazz));
+        }
+        // Collect subscribers from all levels of the hierarchy and re-sort them
+        // to maintain a consistent global priority order across all event types.
+        allSubscribers.sort(PRIORITY_COMPARATOR);
+
+        return callInternal(event, allSubscribers);
+    }
+
+    @SuppressWarnings("unchecked")
+    private CallResult callInternal(Event event, List<Subscriber<?>> subscribers) {
         Map<Subscriber<?>, Throwable> exceptions = new HashMap<>();
 
-        var subscribers = this.getSubscribers(event.getClass());
         for (Subscriber<?> subscriber : subscribers) {
             if (Utils.shouldCallSubscriber(subscriber, event)) {
                 try {
-                    //noinspection unchecked
                     ((Subscriber<Event>) subscriber).execute(event);
                 } catch (Throwable throwable) {
                     exceptions.put(subscriber, throwable);
