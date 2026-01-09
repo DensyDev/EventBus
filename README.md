@@ -1,0 +1,80 @@
+# EventBus
+
+A simple library for sending events and subscribing to them
+
+## Example of usage
+Subscription and event dispatch
+```java
+EventBus eventBus = new EventBusImpl();
+
+eventBus.subscribe(ChatMessageEvent.class, event -> {
+    System.out.println("Received ChatMessageEvent: " + event.getMessage());
+    if (shouldCancel) {
+        event.cancel();
+    }
+});
+
+eventBus.subscribe(new AsyncChatListener());
+
+eventBus.call(new ChatMessageEvent("Chat message"));
+```
+Subscribing to events using the `@Subscribe` annotation
+```java
+public class AsyncChatListener {
+    @Subscribe(priority = EventPriorities.FIRST, ignoreCancelled = true, async = true)
+    public void onChatMessage(ChatMessageEvent event) {
+        System.out.println("Async chat event: " + event);
+    }
+}
+```
+Unsubscribe from events
+```java
+// Subscribing to events
+Subscriber<ChatMessageEvent> subscriber = eventBus.subscribe(ChatMessageEvent.class, event -> {
+    System.out.println("Received ChatMessageEvent: " + event.getMessage());
+});
+
+AsyncChatListener asyncChatListener = new AsyncChatListener();
+eventBus.subscribe(asyncChatListener);
+
+eventBus.call(new ChatMessageEvent("Chat message"));
+
+// Unsubscribe from events
+eventBus.unsubscribe(asyncChatListener);
+eventBus.unsubscribe(subscriber);
+```
+Working with event result
+```java
+CallResult result = eventBus.callSilently(new ChatMessageEvent("Chat message"));
+System.out.println("Exceptions: " + result.getExceptions());
+System.out.println("Is success: " + result.isSuccess());
+System.out.println("Is cancelled: " + result.isCancelled());
+```
+Creating an own event
+```java
+public class ChatMessageEvent implements Event, Cancellable {
+    private final String message;
+    private boolean cancelled;
+
+    public ChatMessageEvent(String message) {
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    @Override
+    public boolean isCancelled() {
+        return cancelled;
+    }
+
+    @Override
+    public void setCancelled(boolean cancelled) {
+        this.cancelled = cancelled;
+    }
+}
+```
+
+### Special Thanks
+Inspired by the [AllayMC event system](https://github.com/AllayMC/Allay/tree/master/api/src/main/java/org/allaymc/api/eventbus), I took some code from here.
