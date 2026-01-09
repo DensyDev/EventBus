@@ -164,7 +164,7 @@ public class EventBusImpl implements EventBus {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <E extends Event> E callEvent(E event) {
+    public <E extends Event> E call(E event) {
         Class<E> eventClass = (Class<E>) event.getClass();
 
         List<Subscriber<E>> subscribers = this.getSubscribers(eventClass);

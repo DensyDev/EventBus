@@ -31,7 +31,7 @@ public interface EventBus {
 
     void unsubscribe(Subscriber<?> subscriber);
 
-    <E extends Event> E callEvent(E event);
+    <E extends Event> E call(E event);
 
     ExecutorService getAsyncExecutor();
 }
