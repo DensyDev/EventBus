@@ -5,6 +5,11 @@ import com.luminiadev.eventbus.api.EventListener;
 
 import java.util.concurrent.ExecutorService;
 
+/**
+ * Lambda subscriber for handling EventListener.
+ *
+ * @param <E> the event type
+ */
 public class LambdaSubscriber<E extends Event> extends AbstractSubscriber<E> {
 
     private final EventListener<E> listener;

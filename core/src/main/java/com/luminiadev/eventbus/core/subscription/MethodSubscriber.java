@@ -10,6 +10,11 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 
+/**
+ * Method subscriber for handling methods subscribed using the @Subscribe annotation.
+ *
+ * @param <E> the event type
+ */
 public class MethodSubscriber<E extends Event> extends AbstractSubscriber<E> {
 
     private static final Map<ClassLoader, FastMemberLoader> FAST_MEMBER_LOADERS = new ConcurrentHashMap<>();

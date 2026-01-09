@@ -101,27 +101,27 @@ public class EventBusImpl implements EventBus {
     }
 
     @Override
-    public <E extends Event> Subscriber<E> subscribe(Class<E> eventClass, EventListener<E> eventHandler) {
-        return this.subscribe(eventClass, eventHandler, 0);
+    public <E extends Event> Subscriber<E> subscribe(Class<E> eventClass, EventListener<E> eventListener) {
+        return this.subscribe(eventClass, eventListener, 0);
     }
 
     @Override
-    public <E extends Event> Subscriber<E> subscribe(Class<E> eventClass, EventListener<E> eventHandler, int priority) {
-        return this.subscribe(eventClass, eventHandler, priority, false);
+    public <E extends Event> Subscriber<E> subscribe(Class<E> eventClass, EventListener<E> eventListener, int priority) {
+        return this.subscribe(eventClass, eventListener, priority, false);
     }
 
-    public <E extends Event> Subscriber<E> subscribe(Class<E> eventClass, EventListener<E> eventHandler, int priority, boolean ignoreCancelled) {
-        return this.subscribe(eventClass, eventHandler, priority, ignoreCancelled, false);
+    public <E extends Event> Subscriber<E> subscribe(Class<E> eventClass, EventListener<E> eventListener, int priority, boolean ignoreCancelled) {
+        return this.subscribe(eventClass, eventListener, priority, ignoreCancelled, false);
     }
 
     @Override
-    public <E extends Event> Subscriber<E> subscribe(Class<E> eventClass, EventListener<E> eventHandler, int priority, boolean ignoreCancelled, boolean async) {
+    public <E extends Event> Subscriber<E> subscribe(Class<E> eventClass, EventListener<E> eventListener, int priority, boolean ignoreCancelled, boolean async) {
         LambdaSubscriber<E> subscriber = new LambdaSubscriber<>(
                 eventClass,
                 priority,
                 ignoreCancelled,
                 async,
-                eventHandler,
+                eventListener,
                 asyncExecutor
         );
         return this.subscribe(eventClass, subscriber);

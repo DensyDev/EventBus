@@ -6,6 +6,11 @@ import lombok.AllArgsConstructor;
 
 import java.util.concurrent.ExecutorService;
 
+/**
+ * Basic class for all subscribers.
+ *
+ * @param <E> the event type
+ */
 @AllArgsConstructor
 public abstract class AbstractSubscriber<E extends Event> implements Subscriber<E> {
 
@@ -36,7 +41,9 @@ public abstract class AbstractSubscriber<E extends Event> implements Subscriber<
     }
 
     @Override
-    public void execute(E event) {
+    public final void execute(E event) {
+        // If the event is asynchronous, we call the
+        // internal handler method via the async executor.
         if (!async) {
             executeInternal(event);
         } else {
@@ -44,5 +51,10 @@ public abstract class AbstractSubscriber<E extends Event> implements Subscriber<
         }
     }
 
+    /**
+     * Internal method for calling an event handler.
+     *
+     * @param event the event
+     */
     protected abstract void executeInternal(E event);
 }
