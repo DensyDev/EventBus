@@ -1,6 +1,6 @@
 # EventBus
 
-A simple library for sending events and subscribing to them
+A simple library for dispatching events and subscribing to them
 
 ## Example of usage
 Subscription and event dispatch
