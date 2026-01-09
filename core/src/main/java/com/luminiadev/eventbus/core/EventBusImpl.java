@@ -4,7 +4,7 @@ import com.luminiadev.eventbus.api.Event;
 import com.luminiadev.eventbus.api.EventBus;
 import com.luminiadev.eventbus.api.EventListener;
 import com.luminiadev.eventbus.api.exception.EventException;
-import com.luminiadev.eventbus.api.subscription.Subscribe;
+import com.luminiadev.eventbus.api.subscription.annotation.Subscribe;
 import com.luminiadev.eventbus.api.subscription.Subscriber;
 import com.luminiadev.eventbus.core.subscription.LambdaSubscriber;
 import com.luminiadev.eventbus.core.subscription.MethodSubscriber;

@@ -1,4 +1,4 @@
-package com.luminiadev.eventbus.api.subscription;
+package com.luminiadev.eventbus.api.subscription.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

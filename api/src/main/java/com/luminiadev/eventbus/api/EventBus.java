@@ -1,6 +1,7 @@
 package com.luminiadev.eventbus.api;
 
 import com.luminiadev.eventbus.api.subscription.Subscriber;
+import com.luminiadev.eventbus.api.subscription.annotation.Subscribe;
 import org.jetbrains.annotations.UnmodifiableView;
 
 import java.util.List;
@@ -34,7 +35,7 @@ public interface EventBus {
      * Registers all methods marked with @Subscribe annotation within the given listener object.
      *
      * @param listener the object containing event handler methods
-     * @see com.luminiadev.eventbus.api.subscription.Subscribe
+     * @see Subscribe
      */
     void subscribe(Object listener);
 
