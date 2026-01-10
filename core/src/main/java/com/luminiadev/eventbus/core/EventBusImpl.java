@@ -31,7 +31,7 @@ public class EventBusImpl implements EventBus {
     public EventBusImpl() {
         this(Executors.newCachedThreadPool(r -> {
             Thread thread = new Thread(r);
-            thread.setName("EventBus-Async-" + thread.threadId());
+            thread.setName("EventBus-Async-" + thread.getId());
             thread.setDaemon(true);
             return thread;
         }));
