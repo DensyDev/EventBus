@@ -42,7 +42,7 @@ subprojects {
         repositories {
             maven {
                 name = "luminiadev"
-                url = uri("https://repo.luminiadev.com/private")
+                url = uri("https://repo.luminiadev.com/snapshots")
                 credentials {
                     username = System.getenv("MAVEN_USERNAME")
                     password = System.getenv("MAVEN_PASSWORD")
