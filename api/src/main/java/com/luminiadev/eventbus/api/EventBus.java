@@ -66,11 +66,11 @@ public interface EventBus {
      * @param eventClass      the class of the event
      * @param eventListener   the event listener
      * @param priority        the execution priority (higher values execute earlier)
-     * @param ignoreCancelled if false, the handler runs even if the event was cancelled
+     * @param handleCancelled if false, the handler runs even if the event was cancelled
      * @param <E>             the type of the event
      * @return the created subscriber instance
      */
-    <E extends Event> Subscriber<E> subscribe(Class<E> eventClass, EventListener<E> eventListener, int priority, boolean ignoreCancelled);
+    <E extends Event> Subscriber<E> subscribe(Class<E> eventClass, EventListener<E> eventListener, int priority, boolean handleCancelled);
 
     /**
      * Subscribes a functional handler with full control over execution settings.
@@ -78,12 +78,12 @@ public interface EventBus {
      * @param eventClass      the class of the event
      * @param eventListener   the event listener
      * @param priority        the execution priority (higher values execute earlier)
-     * @param ignoreCancelled if false, the handler runs even if the event was cancelled
+     * @param handleCancelled if false, the handler runs even if the event was cancelled
      * @param async           if true, the handler will be executed asynchronously
      * @param <E>             the type of the event
      * @return the created subscriber instance
      */
-    <E extends Event> Subscriber<E> subscribe(Class<E> eventClass, EventListener<E> eventListener, int priority, boolean ignoreCancelled, boolean async);
+    <E extends Event> Subscriber<E> subscribe(Class<E> eventClass, EventListener<E> eventListener, int priority, boolean handleCancelled, boolean async);
 
     /**
      * Directly registers a pre-defined subscriber.

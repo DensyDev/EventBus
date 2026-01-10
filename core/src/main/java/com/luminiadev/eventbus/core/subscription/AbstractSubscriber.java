@@ -16,7 +16,7 @@ public abstract class AbstractSubscriber<E extends Event> implements Subscriber<
 
     private final Class<E> eventClass;
     private final int priority;
-    private final boolean ignoreCancelled;
+    private final boolean handleCancelled;
     private final boolean async;
     private final ExecutorService asyncExecutor;
 
@@ -31,8 +31,8 @@ public abstract class AbstractSubscriber<E extends Event> implements Subscriber<
     }
 
     @Override
-    public boolean isIgnoreCancelled() {
-        return ignoreCancelled;
+    public boolean isHandleCancelled() {
+        return handleCancelled;
     }
 
     @Override
@@ -41,13 +41,13 @@ public abstract class AbstractSubscriber<E extends Event> implements Subscriber<
     }
 
     @Override
-    public final void execute(E event) {
+    public final void call(E event) {
         // If the event is asynchronous, we call the
         // internal handler method via the async executor.
         if (!async) {
-            executeInternal(event);
+            execute(event);
         } else {
-            asyncExecutor.submit(() -> executeInternal(event));
+            asyncExecutor.submit(() -> execute(event));
         }
     }
 
@@ -56,5 +56,5 @@ public abstract class AbstractSubscriber<E extends Event> implements Subscriber<
      *
      * @param event the event
      */
-    protected abstract void executeInternal(E event);
+    protected abstract void execute(E event);
 }

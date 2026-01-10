@@ -22,8 +22,8 @@ public class MethodSubscriber<E extends Event> extends AbstractSubscriber<E> {
     private final FastMethod method;
     private final Object listener;
 
-    public MethodSubscriber(Class<E> eventClass, int priority, boolean ignoreCancelled, boolean async, Method method, Object listener, ExecutorService asyncExecutor) {
-        super(eventClass, priority, ignoreCancelled, async, asyncExecutor);
+    public MethodSubscriber(Class<E> eventClass, int priority, boolean handleCancelled, boolean async, Method method, Object listener, ExecutorService asyncExecutor) {
+        super(eventClass, priority, handleCancelled, async, asyncExecutor);
         this.method = FastMethod.create(
                 method,
                 FAST_MEMBER_LOADERS.computeIfAbsent(
@@ -36,9 +36,9 @@ public class MethodSubscriber<E extends Event> extends AbstractSubscriber<E> {
     }
 
     @Override
-    protected void executeInternal(E event) {
+    protected void execute(E event) {
         try {
-            method.invoke(listener, event);
+            this.method.invoke(listener, event);
         } catch (Throwable t) {
             throw new EventException("Failed to call method " + method.getName() + " for listener " + listener, t);
         }

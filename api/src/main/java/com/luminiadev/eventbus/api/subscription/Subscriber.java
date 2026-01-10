@@ -26,9 +26,9 @@ public interface Subscriber<E extends Event> {
     /**
      * Checks if this subscriber should process events that have been cancelled.
      *
-     * @return false if the subscriber ignores cancellation state, true otherwise
+     * @return true if the subscriber ignores cancellation state, false otherwise
      */
-    boolean isIgnoreCancelled();
+    boolean isHandleCancelled();
 
     /**
      * Checks if this subscriber should be executed asynchronously.
@@ -42,5 +42,5 @@ public interface Subscriber<E extends Event> {
      *
      * @param event the event instance to process
      */
-    void execute(E event);
+    void call(E event);
 }
