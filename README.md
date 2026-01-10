@@ -75,6 +75,57 @@ public class ChatMessageEvent implements Event, Cancellable {
     }
 }
 ```
+___
+
+## Maven
+Adding repo:
+```xml
+<repositories>
+    <repository>
+        <id>luminiadev-repository-snapshots</id>
+        <url>https://repo.luminiadev.com/snapshots</url>
+    </repository>
+</repositories>
+```
+
+Adding a library api:
+```xml
+<dependency>
+    <groupId>com.luminiadev.eventbus</groupId>
+    <artifactId>api</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+</dependency>
+```
+
+Adding a library implementation:
+```xml
+<dependency>
+    <groupId>com.luminiadev.eventbus</groupId>
+    <artifactId>core</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+</dependency>
+```
+
+## Gradle
+Adding repo:
+```groovy
+maven {
+    name = "luminiadevRepositorySnapshots"
+    url = uri("https://repo.luminiadev.com/snapshots")
+}
+```
+
+Adding a library api:
+```groovy
+implementation "com.luminiadev.eventbus:api:1.0.0-SNAPSHOT"
+```
+
+Adding a library implementation:
+```groovy
+implementation "com.luminiadev.eventbus:core:1.0.0-SNAPSHOT"
+```
+
+___
 
 ### Special Thanks
 Inspired by the [AllayMC event system](https://github.com/AllayMC/Allay/tree/master/api/src/main/java/org/allaymc/api/eventbus), I took some code from here.
