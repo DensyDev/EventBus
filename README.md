@@ -21,7 +21,7 @@ eventBus.call(new ChatMessageEvent("Chat message"));
 Subscribing to events using the `@Subscribe` annotation
 ```java
 public class AsyncChatListener {
-    @Subscribe(priority = EventPriorities.FIRST, ignoreCancelled = true, async = true)
+    @Subscribe(priority = EventPriorities.FIRST, handleCancelled = true, async = true)
     public void onChatMessage(ChatMessageEvent event) {
         System.out.println("Async chat event: " + event);
     }

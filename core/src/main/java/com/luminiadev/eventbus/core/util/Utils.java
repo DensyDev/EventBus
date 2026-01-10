@@ -13,7 +13,7 @@ public class Utils {
     /**
      * Checks that the event has been canceled.
      *
-     * @param event the event instance
+     * @param event the event object
      * @return true if cancelled, otherwise false
      */
     public static boolean isEventCancelled(Object event) {
@@ -24,11 +24,11 @@ public class Utils {
      * Checks whether to call the subscriber handler.
      *
      * @param subscriber the event subscriber
-     * @param event      the event
+     * @param event      the event object
      * @return true if should, otherwise false
      */
     public static boolean shouldCallSubscriber(Subscriber<?> subscriber, Object event) {
-        return !subscriber.isIgnoreCancelled() || !isEventCancelled(event);
+        return subscriber.isHandleCancelled() || !isEventCancelled(event);
     }
 
     /**

@@ -34,5 +34,5 @@ public @interface Subscribe {
      *
      * @return false if the handler ignores the cancelled state
      */
-    boolean ignoreCancelled() default false;
+    boolean handleCancelled() default true;
 }

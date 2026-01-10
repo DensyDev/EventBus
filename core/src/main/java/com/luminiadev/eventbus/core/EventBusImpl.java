@@ -31,7 +31,7 @@ public class EventBusImpl implements EventBus {
     public EventBusImpl() {
         this(Executors.newCachedThreadPool(r -> {
             Thread thread = new Thread(r);
-            thread.setName("EventBus-Async-" + thread.getId());
+            thread.setName("EventBus-Async-" + thread.threadId());
             thread.setDaemon(true);
             return thread;
         }));
@@ -89,7 +89,7 @@ public class EventBusImpl implements EventBus {
                 Subscriber<Event> subscriber = new MethodSubscriber<>(
                         eventClass,
                         annotation.priority(),
-                        annotation.ignoreCancelled(),
+                        annotation.handleCancelled(),
                         annotation.async(),
                         method,
                         listener,
@@ -112,16 +112,16 @@ public class EventBusImpl implements EventBus {
         return this.subscribe(eventClass, eventListener, priority, false);
     }
 
-    public <E extends Event> Subscriber<E> subscribe(Class<E> eventClass, EventListener<E> eventListener, int priority, boolean ignoreCancelled) {
-        return this.subscribe(eventClass, eventListener, priority, ignoreCancelled, false);
+    public <E extends Event> Subscriber<E> subscribe(Class<E> eventClass, EventListener<E> eventListener, int priority, boolean handleCancelled) {
+        return this.subscribe(eventClass, eventListener, priority, handleCancelled, false);
     }
 
     @Override
-    public <E extends Event> Subscriber<E> subscribe(Class<E> eventClass, EventListener<E> eventListener, int priority, boolean ignoreCancelled, boolean async) {
+    public <E extends Event> Subscriber<E> subscribe(Class<E> eventClass, EventListener<E> eventListener, int priority, boolean handleCancelled, boolean async) {
         LambdaSubscriber<E> subscriber = new LambdaSubscriber<>(
                 eventClass,
                 priority,
-                ignoreCancelled,
+                handleCancelled,
                 async,
                 eventListener,
                 asyncExecutor
@@ -208,14 +208,14 @@ public class EventBusImpl implements EventBus {
         for (Subscriber<?> subscriber : subscribers) {
             if (Utils.shouldCallSubscriber(subscriber, event)) {
                 try {
-                    ((Subscriber<Event>) subscriber).execute(event);
+                    ((Subscriber<Event>) subscriber).call(event);
                 } catch (Throwable throwable) {
                     exceptions.put(subscriber, throwable);
                 }
             }
         }
 
-        return new CallResultImpl(event, exceptions);
+        return new CallResultImpl(exceptions, Utils.isEventCancelled(event));
     }
 
     @Override
