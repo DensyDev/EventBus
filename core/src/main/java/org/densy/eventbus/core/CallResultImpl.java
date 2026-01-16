@@ -1,7 +1,7 @@
-package com.luminiadev.eventbus.core;
+package org.densy.eventbus.core;
 
-import com.luminiadev.eventbus.api.CallResult;
-import com.luminiadev.eventbus.api.subscription.Subscriber;
+import org.densy.eventbus.api.CallResult;
+import org.densy.eventbus.api.subscription.Subscriber;
 import lombok.ToString;
 import org.jetbrains.annotations.UnmodifiableView;
 

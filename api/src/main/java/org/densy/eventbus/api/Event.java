@@ -1,4 +1,4 @@
-package com.luminiadev.eventbus.api;
+package org.densy.eventbus.api;
 
 /**
  * An event interface.

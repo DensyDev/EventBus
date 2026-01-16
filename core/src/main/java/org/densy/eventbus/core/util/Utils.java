@@ -1,7 +1,7 @@
-package com.luminiadev.eventbus.core.util;
+package org.densy.eventbus.core.util;
 
-import com.luminiadev.eventbus.api.Cancellable;
-import com.luminiadev.eventbus.api.subscription.Subscriber;
+import org.densy.eventbus.api.Cancellable;
+import org.densy.eventbus.api.subscription.Subscriber;
 
 import java.util.*;
 

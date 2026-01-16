@@ -1,4 +1,4 @@
-package com.luminiadev.eventbus.api.exception;
+package org.densy.eventbus.api.exception;
 
 import lombok.experimental.StandardException;
 

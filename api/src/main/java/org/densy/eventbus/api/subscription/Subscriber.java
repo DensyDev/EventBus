@@ -1,6 +1,6 @@
-package com.luminiadev.eventbus.api.subscription;
+package org.densy.eventbus.api.subscription;
 
-import com.luminiadev.eventbus.api.Event;
+import org.densy.eventbus.api.Event;
 
 /**
  * Represents a registered subscription to a specific event type.

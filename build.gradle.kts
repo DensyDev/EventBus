@@ -11,7 +11,7 @@ java {
 }
 
 allprojects {
-    group = "com.luminiadev.eventbus"
+    group = "org.densy.eventbus"
     version = "1.0.0-SNAPSHOT"
 }
 
@@ -41,8 +41,8 @@ subprojects {
         }
         repositories {
             maven {
-                name = "luminiadev"
-                url = uri("https://repo.luminiadev.com/snapshots")
+                name = "densy"
+                url = uri("https://repo.densy.org/snapshots")
                 credentials {
                     username = System.getenv("MAVEN_USERNAME")
                     password = System.getenv("MAVEN_PASSWORD")

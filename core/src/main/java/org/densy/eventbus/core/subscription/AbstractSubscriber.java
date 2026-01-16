@@ -1,7 +1,7 @@
-package com.luminiadev.eventbus.core.subscription;
+package org.densy.eventbus.core.subscription;
 
-import com.luminiadev.eventbus.api.Event;
-import com.luminiadev.eventbus.api.subscription.Subscriber;
+import org.densy.eventbus.api.Event;
+import org.densy.eventbus.api.subscription.Subscriber;
 import lombok.AllArgsConstructor;
 
 import java.util.concurrent.ExecutorService;
