@@ -1,7 +1,7 @@
-package com.luminiadev.eventbus.core.subscription;
+package org.densy.eventbus.core.subscription;
 
-import com.luminiadev.eventbus.api.Event;
-import com.luminiadev.eventbus.api.exception.EventException;
+import org.densy.eventbus.api.Event;
+import org.densy.eventbus.api.exception.EventException;
 import me.sunlan.fastreflection.FastMemberLoader;
 import me.sunlan.fastreflection.FastMethod;
 

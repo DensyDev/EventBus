@@ -1,6 +1,6 @@
-package com.luminiadev.eventbus.api;
+package org.densy.eventbus.api;
 
-import com.luminiadev.eventbus.api.subscription.Subscriber;
+import org.densy.eventbus.api.subscription.Subscriber;
 import org.jetbrains.annotations.UnmodifiableView;
 
 import java.util.Map;

@@ -1,15 +1,15 @@
-package com.luminiadev.eventbus.core;
+package org.densy.eventbus.core;
 
-import com.luminiadev.eventbus.api.CallResult;
-import com.luminiadev.eventbus.api.Event;
-import com.luminiadev.eventbus.api.EventBus;
-import com.luminiadev.eventbus.api.EventListener;
-import com.luminiadev.eventbus.api.exception.EventException;
-import com.luminiadev.eventbus.api.subscription.Subscriber;
-import com.luminiadev.eventbus.api.subscription.annotation.Subscribe;
-import com.luminiadev.eventbus.core.subscription.LambdaSubscriber;
-import com.luminiadev.eventbus.core.subscription.MethodSubscriber;
-import com.luminiadev.eventbus.core.util.Utils;
+import org.densy.eventbus.api.CallResult;
+import org.densy.eventbus.api.Event;
+import org.densy.eventbus.api.EventBus;
+import org.densy.eventbus.api.EventListener;
+import org.densy.eventbus.api.exception.EventException;
+import org.densy.eventbus.api.subscription.Subscriber;
+import org.densy.eventbus.api.subscription.annotation.Subscribe;
+import org.densy.eventbus.core.subscription.LambdaSubscriber;
+import org.densy.eventbus.core.subscription.MethodSubscriber;
+import org.densy.eventbus.core.util.Utils;
 import org.jetbrains.annotations.UnmodifiableView;
 
 import java.lang.reflect.Method;

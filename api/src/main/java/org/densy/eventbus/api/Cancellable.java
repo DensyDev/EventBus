@@ -1,4 +1,4 @@
-package com.luminiadev.eventbus.api;
+package org.densy.eventbus.api;
 
 /**
  * An interface for defining that an event can be canceled.

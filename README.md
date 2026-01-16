@@ -78,12 +78,12 @@ public class ChatMessageEvent implements Event, Cancellable {
 ___
 
 ## Maven
-Adding repo:
+Adding repository:
 ```xml
 <repositories>
     <repository>
-        <id>luminiadev-repository-snapshots</id>
-        <url>https://repo.luminiadev.com/snapshots</url>
+        <id>densy-repository-snapshots</id>
+        <url>https://repo.densy.org/snapshots</url>
     </repository>
 </repositories>
 ```
@@ -91,7 +91,7 @@ Adding repo:
 Adding a library api:
 ```xml
 <dependency>
-    <groupId>com.luminiadev.eventbus</groupId>
+    <groupId>org.densy.eventbus</groupId>
     <artifactId>api</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 </dependency>
@@ -100,29 +100,29 @@ Adding a library api:
 Adding a library implementation:
 ```xml
 <dependency>
-    <groupId>com.luminiadev.eventbus</groupId>
+    <groupId>org.densy.eventbus</groupId>
     <artifactId>core</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 </dependency>
 ```
 
 ## Gradle
-Adding repo:
+Adding repository:
 ```groovy
 maven {
-    name = "luminiadevRepositorySnapshots"
-    url = uri("https://repo.luminiadev.com/snapshots")
+    name = "densyRepositorySnapshots"
+    url = uri("https://repo.densy.org/snapshots")
 }
 ```
 
 Adding a library api:
 ```groovy
-implementation "com.luminiadev.eventbus:api:1.0.0-SNAPSHOT"
+implementation "org.densy.eventbus:api:1.0.0-SNAPSHOT"
 ```
 
 Adding a library implementation:
 ```groovy
-implementation "com.luminiadev.eventbus:core:1.0.0-SNAPSHOT"
+implementation "org.densy.eventbus:core:1.0.0-SNAPSHOT"
 ```
 
 ___
